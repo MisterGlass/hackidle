@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HackIdle — Incremental Clicker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="noise"></div>
+
+  <header class="header">
+    <h1 class="logo">HACK<span>IDLE</span></h1>
+    <p class="tagline">// accumulate bits. automate the grind.</p>
+  </header>
+
+  <main class="game">
+    <section class="resource-panel">
+      <div class="bits-display">
+        <span class="bits-label">BITS</span>
+        <span id="bits" class="bits-value">0</span>
+        <span class="bits-sep">/</span>
+        <span id="bits-max" class="bits-max">1K</span>
+      </div>
+      <div class="storage-bar-wrap" aria-hidden="true">
+        <div id="storage-bar" class="storage-bar" style="width: 0%"></div>
+      </div>
+      <div class="per-second">
+        <span id="per-second">0</span> bits/sec
+      </div>
+      <div class="passwords-display">
+        <span class="passwords-label">PASSWORDS</span>
+        <span id="passwords" class="passwords-value">0</span>
+      </div>
+      <div class="per-second">
+        <span id="passwords-per-second">0</span> passwords/sec
+      </div>
+      <button type="button" id="crack-btn" class="crack-btn" disabled>Crack (100 bits → 1 password)</button>
+    </section>
+
+    <section class="click-zone">
+      <button type="button" id="hack-btn" class="hack-btn" aria-label="Hack">
+        <span class="hack-icon">⌨</span>
+        <span class="hack-text">HACK</span>
+      </button>
+    </section>
+
+    <section class="upgrades">
+      <div id="upgrades-columns" class="upgrades-columns">
+        <div class="upgrades-column">
+          <h2 class="upgrades-title">UPGRADES</h2>
+          <div id="upgrades-list" class="upgrades-list">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+        <div class="upgrades-column">
+          <h2 class="upgrades-title">STORAGE</h2>
+          <div id="storage-upgrades-list" class="upgrades-list">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <button type="button" id="save-btn" class="meta-btn">Save</button>
+    <button type="button" id="reset-btn" class="meta-btn danger">Reset</button>
+  </footer>
+
+  <script src="game.js"></script>
+</body>
+</html>
