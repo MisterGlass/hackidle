@@ -17,8 +17,8 @@
     { id: 'usb', name: 'USB stick', desc: '+500 storage', baseCost: 100, costScaling: 1.2, type: 'storage', value: 500 },
     { id: 'hdd', name: 'External HDD', desc: '+2K storage', baseCost: 500, costScaling: 1.25, type: 'storage', value: 2000 },
     { id: 'ssd', name: 'SSD', desc: '+10K storage', baseCost: 2500, costScaling: 1.3, type: 'storage', value: 10000 },
-    { id: 'ddr4ram', name: 'DDR4 RAM', desc: '+1% bits/sec (compounds per stack)', baseCost: 2000, costScaling: 1.5, type: 'passiveMultiplier', value: 1.01 },
-    { id: 'ddr5ram', name: 'DDR5 RAM', desc: '+5% bits/sec (compounds per stack)', baseCost: 20000, costScaling: 1.5, type: 'passiveMultiplier', value: 1.05 },
+    { id: 'ddr4ram', name: 'DDR4 RAM', desc: '+1% bits/sec (compounds per stack)', baseCost: 2000, costScaling: 1.3, type: 'passiveMultiplier', value: 1.03 },
+    { id: 'ddr5ram', name: 'DDR5 RAM', desc: '+5% bits/sec (compounds per stack)', baseCost: 20000, costScaling: 1.3, type: 'passiveMultiplier', value: 1.1 },
     { id: 'nas', name: 'NAS', desc: '+50K storage', baseCost: 15000, costScaling: 1.35, type: 'storage', value: 50000 },
     { id: 'server-rack', name: 'Server rack', desc: '+200K storage', baseCost: 75000, costScaling: 1.4, type: 'storage', value: 200000 },
   ];
