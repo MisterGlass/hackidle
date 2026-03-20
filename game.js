@@ -175,6 +175,15 @@
     return Number(n).toFixed(2);
   }
 
+  /** Bits/sec: same scaling as formatBits but 2 decimals (no floor). */
+  function formatBitsPerSecond(n) {
+    if (n >= 1e12) return (n / 1e12).toFixed(2) + 'T';
+    if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
+    return Number(n).toFixed(2);
+  }
+
   function buyUpgrade(id) {
     const config = upgradesConfig.find((u) => u.id === id);
     if (!config || !canAfford(id)) return;
@@ -211,7 +220,7 @@
     const crackBtn = document.getElementById('crack-btn');
     if (bitsEl) bitsEl.textContent = formatBits(state.bits);
     if (maxEl) maxEl.textContent = formatBits(state.maxBits);
-    if (perSecEl) perSecEl.textContent = formatBits(state.perSecond);
+    if (perSecEl) perSecEl.textContent = formatBitsPerSecond(state.perSecond);
     if (passwordsEl) passwordsEl.textContent = formatPasswords(state.passwords);
     if (passwordsPerSecEl) passwordsPerSecEl.textContent = formatPasswordsPerSecond(state.passwordsPerSecond);
     if (barEl) {
