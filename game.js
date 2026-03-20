@@ -175,13 +175,14 @@
     return Number(n).toFixed(2);
   }
 
-  /** Bits/sec: same scaling as formatBits but 2 decimals (no floor). */
+  /** Bits/sec: always 2 fractional digits on the actual rate (no K rounding below 1M). */
   function formatBitsPerSecond(n) {
-    if (n >= 1e12) return (n / 1e12).toFixed(2) + 'T';
-    if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
-    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
-    if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
-    return Number(n).toFixed(2);
+    const x = Number(n);
+    if (!isFinite(x)) return '0.00';
+    if (Math.abs(x) >= 1e12) return (x / 1e12).toFixed(2) + 'T';
+    if (Math.abs(x) >= 1e9) return (x / 1e9).toFixed(2) + 'B';
+    if (Math.abs(x) >= 1e6) return (x / 1e6).toFixed(2) + 'M';
+    return x.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function buyUpgrade(id) {
