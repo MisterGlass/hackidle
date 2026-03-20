@@ -17,6 +17,7 @@
     { id: 'usb', name: 'USB stick', desc: '+500 storage', baseCost: 100, costScaling: 1.2, type: 'storage', value: 500 },
     { id: 'hdd', name: 'External HDD', desc: '+2K storage', baseCost: 500, costScaling: 1.25, type: 'storage', value: 2000 },
     { id: 'ssd', name: 'SSD', desc: '+10K storage', baseCost: 2500, costScaling: 1.3, type: 'storage', value: 10000 },
+    { id: 'ram', name: 'RAM', desc: '+5% bits/sec (compounds per stack)', baseCost: 20000, costScaling: 1.5, type: 'passiveMultiplier', value: 10000 },
     { id: 'nas', name: 'NAS', desc: '+50K storage', baseCost: 15000, costScaling: 1.35, type: 'storage', value: 50000 },
     { id: 'server-rack', name: 'Server rack', desc: '+200K storage', baseCost: 75000, costScaling: 1.4, type: 'storage', value: 200000 },
   ];
@@ -83,7 +84,7 @@
   let lastVisibleUpgradesKey = '';
 
   function computeVisibleUpgradesKey() {
-    const normalTypes = ['click', 'passive', 'passivePasswords'];
+    const normalTypes = ['click', 'passive', 'passivePasswords', 'passiveMultiplier'];
     const mainIds = upgradesConfig
       .filter((c) => normalTypes.includes(c.type) && shouldShowUpgrade(c))
       .map((c) => c.id)
@@ -115,12 +116,19 @@
   }
 
   function recalcPerSecond() {
-    state.perSecond = 0;
+    let base = 0;
+    let passiveMult = 1;
     upgradesConfig.forEach((config) => {
+      if (config.type === 'passiveMultiplier') {
+        const count = state.counts[config.id] || 0;
+        passiveMult *= Math.pow(config.value, count);
+        return;
+      }
       if (config.type !== 'passive') return;
       const count = state.counts[config.id] || 0;
-      state.perSecond += count * config.value;
+      base += count * config.value;
     });
+    state.perSecond = base * passiveMult;
   }
 
   function recalcClickPower() {
@@ -251,7 +259,7 @@
     const listEl = document.getElementById('upgrades-list');
     const storageListEl = document.getElementById('storage-upgrades-list');
     if (!listEl || !storageListEl) return;
-    const normalTypes = ['click', 'passive', 'passivePasswords'];
+    const normalTypes = ['click', 'passive', 'passivePasswords', 'passiveMultiplier'];
     listEl.innerHTML = upgradesConfig
       .filter((c) => normalTypes.includes(c.type) && shouldShowUpgrade(c))
       .map(renderUpgradeCard)
