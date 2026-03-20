@@ -159,6 +159,13 @@
     return Math.floor(n).toLocaleString();
   }
 
+  /** Rates (e.g. passwords/sec): always up to 2 decimal places. */
+  function formatPasswordsPerSecond(n) {
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
+    return Number(n).toFixed(2);
+  }
+
   function buyUpgrade(id) {
     const config = upgradesConfig.find((u) => u.id === id);
     if (!config || !canAfford(id)) return;
@@ -197,7 +204,7 @@
     if (maxEl) maxEl.textContent = formatBits(state.maxBits);
     if (perSecEl) perSecEl.textContent = formatBits(state.perSecond);
     if (passwordsEl) passwordsEl.textContent = formatPasswords(state.passwords);
-    if (passwordsPerSecEl) passwordsPerSecEl.textContent = formatPasswords(state.passwordsPerSecond);
+    if (passwordsPerSecEl) passwordsPerSecEl.textContent = formatPasswordsPerSecond(state.passwordsPerSecond);
     if (barEl) {
       const pct = state.maxBits > 0 ? Math.min(100, (state.bits / state.maxBits) * 100) : 0;
       barEl.style.width = pct + '%';
